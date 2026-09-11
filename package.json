@@ -1,15 +1,9 @@
 {
   "name": "my-pi-config",
   "version": "0.1.0",
-<<<<<<< HEAD
-  "private": true,
-  "type": "module",
-  "description": "Personal Pi coding-agent config: extensions + custom subagents, symlinked into ~/.pi/agent",
-=======
   "private": false,
   "type": "module",
   "description": "Personal Pi coding-agent config: extensions + custom subagents",
->>>>>>> 07a8d27 (Scaffold with bun: explicit deps, tsconfig, AGENTS.md)
   "scripts": {
     "check": "tsc --noEmit",
     "check:transpile": "bun build .pi/extensions/*.ts --outfile /dev/null --external '@earendil-works/*' --external 'typebox'"
@@ -23,8 +17,4 @@
     "@types/bun": "latest",
     "typescript": "7.0.2"
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 07a8d27 (Scaffold with bun: explicit deps, tsconfig, AGENTS.md)
