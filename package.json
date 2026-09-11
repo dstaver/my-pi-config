@@ -1,0 +1,20 @@
+{
+  "name": "my-pi-config",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Personal Pi coding-agent config: extensions + custom subagents, symlinked into ~/.pi/agent",
+  "scripts": {
+    "check": "tsc --noEmit",
+    "check:transpile": "bun build .pi/extensions/*.ts --outfile /dev/null --external '@earendil-works/*' --external 'typebox'"
+  },
+  "dependencies": {
+    "@earendil-works/pi-ai": "0.85.1",
+    "@earendil-works/pi-coding-agent": "0.85.1",
+    "typebox": "1.3.7"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "7.0.2"
+  }
+}

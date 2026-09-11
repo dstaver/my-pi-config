@@ -178,7 +178,7 @@ export default function modelPricesExtension(pi: ExtensionAPI) {
         }
       }
 
-      const active = findActiveProvider(store, ctx.model);
+      const active = findActiveProvider(store, ctx.model?.id);
       const providers = providerFilter
         ? Object.keys(store).filter((p) => p === providerFilter)
         : Object.keys(store);
@@ -189,7 +189,9 @@ export default function modelPricesExtension(pi: ExtensionAPI) {
       }
 
       for (const name of providers) {
-        const text = tableText(store[name], sortBy, name === active);
+        const bucket = store[name];
+        if (!bucket) continue;
+        const text = tableText(bucket, sortBy, name === active);
         if (ctx.hasUI) {
           const lines = text.split("\n");
           const picked = await ctx.ui.select(`${name} · ${lines[0]}`, lines.slice(1));
@@ -231,12 +233,16 @@ export default function modelPricesExtension(pi: ExtensionAPI) {
         };
       }
       const sortBy = resolveSortKey(params.sortBy ?? "input");
-      const active = findActiveProvider(store, ctx.model);
+      const active = findActiveProvider(store, ctx.model?.id);
       const providers = params.provider
         ? Object.keys(store).filter((p) => p === params.provider)
         : Object.keys(store);
 
-      const sections = providers.map((name) => `## ${name}${name === active ? " (active)" : ""}\n` + tableText(store[name], sortBy, name === active));
+      const sections = providers.map((name) => {
+        const bucket = store[name];
+        if (!bucket) return "";
+        return `## ${name}${name === active ? " (active)" : ""}\n` + tableText(bucket, sortBy, name === active);
+      });
 
       return {
         content: [
@@ -248,7 +254,7 @@ export default function modelPricesExtension(pi: ExtensionAPI) {
         details: {
           ok: true,
           source: STORE_PATH,
-          providers: providers.length === 0 ? Object.keys(store).length : providers.map((p) => ({ provider: p, checkedAt: store[p].checkedAt })),
+          providers: providers.length === 0 ? Object.keys(store).length : providers.map((p) => ({ provider: p, checkedAt: store[p]?.checkedAt })),
           sortedBy: sortBy,
         },
       };

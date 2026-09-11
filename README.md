@@ -26,6 +26,20 @@ After linking, run `/reload` in a Pi session (or restart Pi). Extensions from
 `~/.pi/agent/extensions/*.ts` load globally; agents from
 `~/.pi/agent/agents/**/*.md` are user-scope subagents.
 
+## Development
+
+Dependencies (pi SDK typings + typebox) are declared explicitly in `package.json`
+and managed with [bun](https://bun.sh):
+
+```bash
+bun install          # install deps
+bun run check        # type-check extensions (tsc --noEmit)
+bun run check:transpile   # transpile-only sanity check
+```
+
+`AGENTS.md` (in the repo root) holds machine-readable guidance for coding
+agents working in this repo.
+
 ## Custom agents
 
 Agent files are Markdown with YAML frontmatter. Discovery paths:
